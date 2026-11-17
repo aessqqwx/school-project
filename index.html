@@ -3,177 +3,475 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Итоговый проект «Мозг без мифов» — МБОУ «Ялтинская школа «Радуга»</title>
-<meta name="description" content="Научные факты и популярные мифы о строении и работе головного мозга человека">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<title>Научные факты и популярные мифы о мозге — Итоговый проект МБОУ «Ялтинская СШ «Радуга»</title>
+<meta name="description" content="Прикладной проект по биологии: структура мозга, нейропластичность, развенчание мифов, интерактивный практикум">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<!-- CDN libraries -->
+<!-- CDN libraries с fallback -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.0/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-<header class="site-header" aria-label="Шапка сайта">
-  <div class="header-content">
-    <h1 class="logo">Мозг без мифов</h1>
-    <p class="school">МБОУ «Ялтинская средняя школа «Радуга»</p>
-  </div>
-  <nav class="primary-nav" aria-label="Основная навигация">
-    <ul>
-      <li><a href="#hero">Введение</a></li>
-      <li><a href="#theory">Теория</a></li>
-      <li><a href="#facts">Факты</a></li>
-      <li><a href="#myths">Мифы</a></li>
-      <li><a href="#practice">Практика</a></li>
-      <li><a href="#stroop">Экперемент Струпа</a></li>
-      <li><a href="#test">Тест</a></li>
-    </ul>
-  </nav>
-  <button id="passportBtn" class="passport-btn" aria-controls="passportModal" aria-expanded="false">Паспорт проекта (ФГОС)</button>
-  <div id="progressBar" class="progress" role="progressbar" aria-label="Прогресс чтения" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <span id="progressFill" class="progress__fill"></span>
+
+<div id="progressBar" class="progress" role="progressbar" aria-label="Прогресс чтения" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <span id="progressFill" class="progress__fill"></span>
+</div>
+
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header-top">
+      <div class="logo-block">
+        <h1 class="site-title">Мозг без мифов</h1>
+        <p class="school-name">МБОУ «Ялтинская средняя школа «Радуга»</p>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Меню" aria-expanded="false">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </div>
+    <nav class="main-nav" id="mainNav" aria-label="Основная навигация">
+      <a href="#intro">Введение</a>
+      <a href="#structure">Строение</a>
+      <a href="#myths">Мифы</a>
+      <a href="#research">Исследование</a>
+      <a href="#stroop">Практикум</a>
+      <a href="#conclusion">Выводы</a>
+      <button id="passportBtn" class="passport-btn">Паспорт проекта</button>
+    </nav>
   </div>
 </header>
 
-<!-- Modal passport -->
-<div id="passportModal" class="modal" role="dialog" aria-modal="true" hidden>
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Закрыть" data-close="modal">
-      <svg viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18"/>
-        <path d="M6 6l12 12"/>
-      </svg>
-    </button>
-    <h2>Паспорт и план проекта (ФГОС)</h2>
-    <section>
-      <h3>Обязательные таблицы (1‑5)</h3>
-      <table>
-        <caption>Таблица 1. План работ</caption>
-        <thead><tr><th>Этап</th><th>Срок</th></tr></thead>
-        <tbody><tr><td>Исследование</td><td>Май‑Июнь</td></tr></tbody>
-      </table>
-      <table>
-        <caption>Таблица 2. Оборудование</caption>
-        <thead><tr><th>Наименование</th><th>Количество</th></tr></thead>
-        <tbody><tr><td>Компьютер</td><td>1</td></tr></tbody>
-      </table>
-      <table>
-        <caption>Таблица 3. Расходы</caption>
-        <thead><tr><th>Статья расходов</th><th>Сумма, руб.</th></tr></thead>
-        <tbody><tr><td>Без оплаты (CDN)</td><td>0</td></tr></tbody>
-      </table>
-      <table>
-        <caption>Таблица 4. Ожидаемые результаты</caption>
-        <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
-        <tbody><tr><td>Уровень знаний учащихся</th><td>Повышение на 30 %</td></tr></tbody>
-      </table>
-      <table>
-        <caption>Таблица 5. Оценка рисков</caption>
-        <thead><tr><th>Риск</th><th>Вероятность</th></tr></thead>
-        <tbody><tr><td>Технические сбои</th><td>Низкая</td></tr></tbody>
-      </table>
-    </section>
-    <section>
-      <h3>Литература и иллюстрации</h3>
-      <ol>
-        <li>Бурденко Н.П. «Неврология для школьников», 2021.</li>
-        <li>Греков А.В. «3D‑модели в образовании», 2020.</li>
-        <li>Официальный сайт ФГОС — <a href="https://fgos.ru" target="_blank" rel="noopener">fgos.ru</a></li>
-      </ol>
-      <p>Рисунки 1‑5 соответствуют структурам мозга, полушариям, нейронам, синапсам и функциональным зонам.</p>
-    </section>
-  </div>
-</div>
-
 <main>
   <!-- HERO -->
-  <section id="hero" class="hero" aria-labelledby="heroTitle">
-    <h2 id="heroTitle">Знаете ли вы свой мозг?</h2>
-    <div class="counters">
-      <div class="counter" data-target="86">0</div>
-      <div class="counter" data-target="12">0</div>
-      <div class="counter" data-target="5">0</div>
-    </div>
-    <p>86 млрд нейронов, 12 ключевых фактов, 5 проверенных мифов</p>
-  </section>
-
-  <!-- Theory / 3D Atlas -->
-  <section id="theory" class="section" aria-labelledby="theoryTitle">
-    <h2 id="theoryTitle">Теоретический раздел: 3D‑атлас мозга</h2>
-    <div id="brainCanvas" class="brain-canvas" role="img" aria-label="Процедурная 3‑д модель мозга с маркерами отделов"></div>
-    <p class="brain-note">Модель построена процедурно, внешних файлов не требует.</p>
-  </section>
-
-  <!-- Facts bento grid -->
-  <section id="facts" class="section" aria-labelledby="factsTitle">
-    <h2 id="factsTitle">Факты о мозге</h2>
-    <div class="bento-grid">
-      <article class="bento-item">
-        <h3>Нейроны</h3>
-        <p>Взрослый мозг содержит около 86 млард нейронов.</p>
-      </article>
-      <article class="bento-item">
-        <h3>Энергопотребление</h3>
-        <p>Мозг использует около 20 % всей энергии организма.</p>
-      </article>
-      <article class="bento-item">
-        <h3>Пластичность</h3>
-        <p>Синapticные связи перестраиваются в ходе обучения.</p>
-      </article>
+  <section id="intro" class="hero">
+    <div class="container">
+      <h2 class="hero-title">Научные факты и популярные мифы о строении и работе головного мозга человека</h2>
+      <p class="hero-lead">Итоговый проект по биологии, 9 класс, 2026–2027 учебный год</p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-number" data-target="86">0</div>
+          <div class="stat-label">млрд нейронов</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="20">0</div>
+          <div class="stat-label">% энергии тела</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-label">м/с скорость сигнала</div>
+        </div>
+      </div>
+      <p class="hero-note">Интерактивная демонстрация строения мозга, анализ распространённых заблуждений и практический эксперимент на внимание</p>
     </div>
   </section>
 
-  <!-- Myths checker -->
-  <section id="myths" class="section" aria-labelledby="mythsTitle">
-    <h2 id="mythsTitle">Проверка мифов</h2>
-    <div class="myth-cards">
-      <article class="myth-card" data-real="false">
-        <h3>Миф 1: 90 % мозга не используется</h3>
-        <button class="reveal-btn">Показать правду</button>
-        <p class="truth hidden">Это миф: весь мозг активен в разные моменты.</p>
-      </article>
-      <article class="myth-card" data-real="true">
-        <h3>Миф 2: Мысли только в левом полушарии</h3>
-        <button class="reveal-btn">Показать правду</button>
-        <p class="truth hidden">Неправда: оба полушария участвуют в мышлении.</p>
-      </article>
+  <!-- Строение и функции -->
+  <section id="structure" class="section section-structure">
+    <div class="container">
+      <h2 class="section-title">Строение и функции головного мозга</h2>
+      
+      <div class="structure-grid">
+        <div class="structure-text">
+          <h3>Основные отделы</h3>
+          <p>Головной мозг взрослого человека содержит около <strong>86 миллиардов нейронов</strong> и потребляет примерно 20% всей энергии организма, хотя составляет лишь 2% от массы тела.</p>
+          <ul class="feature-list">
+            <li><strong>Лобная доля:</strong> планирование, принятие решений, контроль движений</li>
+            <li><strong>Теменная доля:</strong> обработка сенсорной информации, пространственная ориентация</li>
+            <li><strong>Затылочная доля:</strong> обработка зрительной информации</li>
+            <li><strong>Височная доля:</strong> память, слух, распознавание лиц</li>
+            <li><strong>Мозжечок:</strong> координация движений, баланс</li>
+            <li><strong>Ствол мозга:</strong> регуляция витальных функций (дыхание, сердцебиение)</li>
+          </ul>
+          <p class="note">При отсутствии интернета 3D-модель заменяется статичным SVG-атласом ниже</p>
+        </div>
+        <div class="structure-visual">
+          <div id="brainCanvas" class="brain-canvas" role="img" aria-label="Интерактивная 3D-модель головного мозга"></div>
+        </div>
+      </div>
+
+      <!-- Офлайн SVG атлас как fallback -->
+      <details class="atlas-fallback">
+        <summary>Показать статичный атлас (работает без интернета)</summary>
+        <div class="atlas-grid">
+          <svg viewBox="0 0 200 200" class="atlas-svg" aria-label="Схема долей мозга">
+            <ellipse cx="100" cy="100" rx="80" ry="70" fill="#1e3a5f" stroke="#4fc3f7" stroke-width="2"/>
+            <circle cx="70" cy="60" r="8" fill="#ff6b6b"/>
+            <text x="50" y="50" fill="#fff" font-size="10">Лобная</text>
+            <circle cx="130" cy="80" r="8" fill="#4ecdc4"/>
+            <text x="140" y="85" fill="#fff" font-size="10">Теменная</text>
+            <circle cx="100" cy="140" r="8" fill="#ffe66d"/>
+            <text x="80" y="160" fill="#fff" font-size="10">Затылочная</text>
+            <circle cx="40" cy="100" r="8" fill="#95e1d3"/>
+            <text x="10" y="105" fill="#fff" font-size="10">Височная</text>
+            <circle cx="100" cy="170" r="6" fill="#f38181"/>
+            <text x="70" y="190" fill="#fff" font-size="10">Мозжечок</text>
+          </svg>
+          <div class="atlas-legend">
+            <p><span class="legend-dot" style="background:#ff6b6b"></span> Лобная доля — планирование, речь</p>
+            <p><span class="legend-dot" style="background:#4ecdc4"></span> Теменная доля — сенсорика</p>
+            <p><span class="legend-dot" style="background:#ffe66d"></span> Затылочная доля — зрение</p>
+            <p><span class="legend-dot" style="background:#95e1d3"></span> Височная доля — память, слух</p>
+            <p><span class="legend-dot" style="background:#f38181"></span> Мозжечок — координация</p>
+          </div>
+        </div>
+      </details>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <h4>Нейропластичность</h4>
+          <p>Способность мозга изменять свою структуру в ответ на опыт. Синаптические связи усиливаются при повторении действий и ослабевают при неиспользовании.</p>
+        </div>
+        <div class="info-card">
+          <h4>Скорость передачи сигналов</h4>
+          <p>В миелинизированных аксонах крупного диаметра (альфа-мотонейроны) скорость может достигать <strong>100–120 м/с</strong>, в немиелинизированных — менее 1 м/с.</p>
+        </div>
+        <div class="info-card">
+          <h4>Сон и очистка мозга</h4>
+          <p>Во сне активируется глимфатическая система (описана на мышах), которая удаляет метаболические отходы. У человека механизм требует дальнейших исследований.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Practical block -->
-  <section id="practice" class="section" aria-labelledby="practiceTitle">
-    <h2 id="practiceTitle">Практический раздел</h2>
-    <table class="data-table">
-      <caption>Таблица 1. Очки внимания учащихся</caption>
-      <thead><tr><th>Ученик</th><th>Балл</th></tr></thead>
-      <tbody><tr><td>Иванов И.</td><td>78</td></tr><tr><td>Петрова А.</td><td>85</td></tr></tbody>
-    </table>
-    <div class="chart-wrap">
-      <canvas id="chartCanvas" width="500" height="300" aria-label="Диаграмма распределения баллов внимания"></canvas>
+  <!-- Мифы -->
+  <section id="myths" class="section section-myths">
+    <div class="container">
+      <h2 class="section-title">Популярные мифы о мозге</h2>
+      <p class="section-intro">Пять распространённых заблуждений, опровергнутых нейронаукой</p>
+
+      <div class="myths-grid">
+        <article class="myth-card" data-myth="1">
+          <div class="myth-header">
+            <span class="myth-label">Миф 1</span>
+            <button class="myth-toggle" aria-expanded="false">
+              <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+          <h3 class="myth-title">Мы используем только 10% мозга</h3>
+          <div class="myth-content" hidden>
+            <p class="myth-truth"><strong>Опровержение:</strong> Нейровизуализация (фМРТ, ПЭТ) показывает, что все области мозга активны в течение суток. Даже простые задачи вовлекают множество зон одновременно.</p>
+            <p class="myth-source"><em>Источник:</em> Beyerstein B.L. "Whence Cometh the Myth that We Only Use 10% of our Brains?" // Mind Myths, 1999</p>
+          </div>
+        </article>
+
+        <article class="myth-card" data-myth="2">
+          <div class="myth-header">
+            <span class="myth-label">Миф 2</span>
+            <button class="myth-toggle" aria-expanded="false">
+              <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+          <h3 class="myth-title">Левое полушарие — логика, правое — творчество</h3>
+          <div class="myth-content" hidden>
+            <p class="myth-truth"><strong>Опровержение:</strong> Оба полушария участвуют в большинстве когнитивных процессов. Латерализация существует (речь чаще слева), но жёсткого разделения «логика vs творчество» нет.</p>
+            <p class="myth-source"><em>Источник:</em> Nielsen J.A. et al. "An Evaluation of the Left-Brain vs. Right-Brain Hypothesis" // PLOS ONE, 2013</p>
+          </div>
+        </article>
+
+        <article class="myth-card" data-myth="3">
+          <div class="myth-header">
+            <span class="myth-label">Миф 3</span>
+            <button class="myth-toggle" aria-expanded="false">
+              <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+          <h3 class="myth-title">Мы видим глазами</h3>
+          <div class="myth-content" hidden>
+            <p class="myth-truth"><strong>Уточнение:</strong> Сетчатка глаза улавливает свет и преобразует его в нервные импульсы, но интерпретация изображения происходит в зрительной коре затылочной доли. «Видение» — результат обработки мозгом.</p>
+            <p class="myth-source"><em>Источник:</em> Учебники нейрофизиологии (Kandel E., Principles of Neural Science)</p>
+          </div>
+        </article>
+
+        <article class="myth-card" data-myth="4">
+          <div class="myth-header">
+            <span class="myth-label">Миф 4</span>
+            <button class="myth-toggle" aria-expanded="false">
+              <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+          <h3 class="myth-title">Новые нейроны не образуются после рождения</h3>
+          <div class="myth-content" hidden>
+            <p class="myth-truth"><strong>Опровержение:</strong> Взрослый нейрогенез обнаружен в гиппокампе (зубчатая извилина) у грызунов и подтверждён рядом исследований у человека, хотя его интенсивность и роль дискутируются.</p>
+            <p class="myth-source"><em>Источник:</em> Boldrini M. et al. "Human Hippocampal Neurogenesis Persists throughout Aging" // Cell Stem Cell, 2018</p>
+          </div>
+        </article>
+
+        <article class="myth-card" data-myth="5">
+          <div class="myth-header">
+            <span class="myth-label">Миф 5</span>
+            <button class="myth-toggle" aria-expanded="false">
+              <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+          <h3 class="myth-title">Алкоголь убивает клетки мозга</h3>
+          <div class="myth-content" hidden>
+            <p class="myth-truth"><strong>Частичная правда:</strong> Умеренное употребление не вызывает массовой гибели нейронов, но хроническое злоупотребление повреждает синапсы и приводит к атрофии определённых областей (лобная кора, гиппокамп).</p>
+            <p class="myth-source"><em>Источник:</em> Harper C. "The Neuropathology of Alcohol-Related Brain Damage" // Alcohol and Alcoholism, 2009</p>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
-  <!-- Stroop experiment -->
-  <section id="stroop" class="section" aria-labelledby="stroopTitle">
-    <h2 id="stroopTitle">Живой эксперимент: Струп</h2>
-    <button id="startStroop" class="btn">Начать эксперимент</button>
-    <div id="stroopContainer" class="stroop-game hidden" aria-live="polite"></div>
-    <p id="stroopResult" class="hidden"></p>
+  <!-- Исследовательская часть -->
+  <section id="research" class="section section-research">
+    <div class="container">
+      <h2 class="section-title">Исследовательская часть проекта</h2>
+      <p class="section-intro">Планируемое исследование представлений учащихся о мозге</p>
+
+      <div class="research-plan">
+        <h3>Цель</h3>
+        <p>Выявить уровень информированности школьников о структуре и функциях головного мозга, проверить распространённость мифов среди учащихся 8–9 классов.</p>
+        
+        <h3>Методика</h3>
+        <p><strong>Выборка:</strong> планируется опрос 28 учеников параллели 9-х классов МБОУ «Ялтинская СШ «Радуга»».<br>
+        <strong>Инструмент:</strong> анкета из 10 вопросов с выбором ответа (верно/неверно/не знаю).<br>
+        <strong>Обработка:</strong> подсчёт процента правильных ответов, выделение наиболее устойчивых заблуждений.</p>
+
+        <h3>Статус</h3>
+        <div class="status-badge">В стадии сбора данных</div>
+        <p>Результаты опроса будут добавлены в финальную версию проекта после завершения анкетирования.</p>
+      </div>
+
+      <div class="demo-data-block">
+        <h3>Демонстрационные данные (для примера визуализации)</h3>
+        <p class="demo-note"><em>Примечание: данные ниже — гипотетические, используются для демонстрации работы диаграмм. Реальные результаты опроса будут внесены после проведения исследования.</em></p>
+        
+        <div class="chart-container">
+          <canvas id="mythsChart" width="600" height="300" aria-label="Диаграмма: процент учащихся, верящих в мифы (демонстрационные данные)"></canvas>
+        </div>
+
+        <table class="data-table">
+          <caption>Таблица 1. Демонстрационные данные (не реальный опрос)</caption>
+          <thead>
+            <tr>
+              <th>Миф</th>
+              <th>Верят (%)</th>
+              <th>Не верят (%)</th>
+              <th>Не знают (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10% мозга</td>
+              <td>45</td>
+              <td>30</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>Левое/правое полушарие</td>
+              <td>60</td>
+              <td>25</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>Нейроны не восстанавливаются</td>
+              <td>50</td>
+              <td>20</td>
+              <td>30</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
-  <!-- Final test -->
-  <section id="test" class="section" aria-labelledby="testTitle">
-    <h2 id="testTitle">Итоговый тест</h2>
-    <p>Тест из 5 вопросов будет активирован после эксперимента.</p>
+  <!-- Практикум: эксперимент Струпа -->
+  <section id="stroop" class="section section-stroop">
+    <div class="container">
+      <h2 class="section-title">Практикум: тест Струпа</h2>
+      <p class="section-intro">Интерактивный эксперимент на внимание и когнитивный контроль</p>
+
+      <div class="stroop-info">
+        <h3>Что это?</h3>
+        <p>Тест Струпа (1935) — классический эксперимент, демонстрирующий интерференцию: когда слово называет один цвет, а напечатано другим, мозгу требуется больше времени на ответ.</p>
+        <p><strong>Задача:</strong> укажите, совпадает ли <em>цвет текста</em> с <em>значением слова</em>.</p>
+        <p class="stroop-note">Примечание: нет универсальных норм времени реакции. Сравнивайте свои результаты конгруэнтных (совпадающих) и неконгруэнтных проб.</p>
+      </div>
+
+      <div class="stroop-controls">
+        <button id="stroopStartBtn" class="btn-primary">Начать эксперимент</button>
+        <button id="stroopResetBtn" class="btn-secondary" hidden>Начать заново</button>
+      </div>
+
+      <div id="stroopGame" class="stroop-game" hidden>
+        <div class="stroop-trial">
+          <div id="stroopWord" class="stroop-word"></div>
+          <div class="stroop-buttons">
+            <button id="stroopYes" class="btn-yes">Совпадает</button>
+            <button id="stroopNo" class="btn-no">Не совпадает</button>
+          </div>
+          <div id="stroopFeedback" class="stroop-feedback"></div>
+        </div>
+        <div class="stroop-progress" id="stroopProgress">Попытка <span id="stroopCurrent">0</span> из <span id="stroopTotal">10</span></div>
+      </div>
+
+      <div id="stroopResults" class="stroop-results" hidden>
+        <h3>Результаты</h3>
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-value" id="resultAccuracy">—</div>
+            <div class="result-label">Точность</div>
+          </div>
+          <div class="result-card">
+            <div class="result-value" id="resultAvgTime">—</div>
+            <div class="result-label">Среднее время (мс)</div>
+          </div>
+          <div class="result-card">
+            <div class="result-value" id="resultEffect">—</div>
+            <div class="result-label">Эффект Струпа (мс)</div>
+          </div>
+        </div>
+        <p class="results-note">Эффект Струпа — разница между средним временем на неконгруэнтные и конгруэнтные пробы. Положительное значение — норма.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Выводы -->
+  <section id="conclusion" class="section section-conclusion">
+    <div class="container">
+      <h2 class="section-title">Выводы</h2>
+      <ol class="conclusions-list">
+        <li>Многие популярные представления о мозге (миф «10%», жёсткая специализация полушарий) опровергнуты современной нейронаукой.</li>
+        <li>Мозг обладает нейропластичностью: синаптические связи изменяются в течение всей жизни под влиянием обучения и опыта.</li>
+        <li>Скорость передачи нервных импульсов зависит от диаметра аксона и миелинизации, достигая в крупных волокнах 100–120 м/с.</li>
+        <li>Эксперимент Струпа демонстрирует когнитивную интерференцию и подтверждает роль лобной коры в контроле внимания.</li>
+        <li>Проект выполнен в интерактивном формате (3D-модель, практикум) с учётом требований ФГОС и критериев оценки итоговых проектов школы.</li>
+      </ol>
+      <p class="conclusion-note">Данный сайт может использоваться как учебное пособие для занятий по биологии и основам нейрофизиологии в 8–9 классах.</p>
+    </div>
   </section>
 </main>
 
 <footer class="site-footer" role="contentinfo">
-  <p>© 2026 МБОУ «Ялтинская средняя школа «Радуга». Все права защищены.</p>
-  <button id="contrastToggle" aria-pressed="false">Контрастный режим</button>
+  <div class="container">
+    <p class="footer-text">© 2026–2027, МБОУ «Ялтинская средняя школа «Радуга»</p>
+    <button id="contrastBtn" class="contrast-btn" aria-pressed="false">Высокая контрастность</button>
+  </div>
 </footer>
+
+<!-- Модальное окно: паспорт проекта -->
+<dialog id="passportModal" class="modal" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Паспорт итогового проекта (ФГОС)</h2>
+      <button id="modalCloseBtn" class="modal-close" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <section class="passport-section">
+        <h3>Общие сведения</h3>
+        <table class="passport-table">
+          <tr><th>Образовательное учреждение</th><td>МБОУ «Ялтинская средняя школа «Радуга»</td></tr>
+          <tr><th>Предмет</th><td>Биология</td></tr>
+          <tr><th>Тип проекта</th><td>Прикладной с элементами исследования</td></tr>
+          <tr><th>Продолжительность</th><td>Среднесрочный (2 четверти)</td></tr>
+          <tr><th>Год</th><td>2026–2027</td></tr>
+        </table>
+      </section>
+
+      <section class="passport-section">
+        <h3>Таблица 1. График работы над проектом</h3>
+        <table class="passport-table">
+          <thead><tr><th>Этап</th><th>Содержание</th><th>Сроки</th></tr></thead>
+          <tbody>
+            <tr><td>1. Выбор темы</td><td>Обоснование актуальности</td><td>Сентябрь 2026</td></tr>
+            <tr><td>2. Сбор информации</td><td>Изучение литературы, научных статей</td><td>Октябрь–ноябрь 2026</td></tr>
+            <tr><td>3. Разработка</td><td>Создание интерактивного сайта</td><td>Декабрь 2026</td></tr>
+            <tr><td>4. Тестирование</td><td>Проверка работоспособности, опрос учащихся</td><td>Январь 2027</td></tr>
+            <tr><td>5. Защита</td><td>Презентация проекта комиссии</td><td>Февраль 2027</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="passport-section">
+        <h3>Таблица 2. Ресурсное обеспечение</h3>
+        <table class="passport-table">
+          <thead><tr><th>Ресурс</th><th>Описание</th><th>Количество</th></tr></thead>
+          <tbody>
+            <tr><td>Компьютер</td><td>Для разработки и тестирования</td><td>1</td></tr>
+            <tr><td>Литература</td><td>Учебники, научные статьи</td><td>8 источников</td></tr>
+            <tr><td>Программное обеспечение</td><td>Текстовый редактор, браузер</td><td>Бесплатное</td></tr>
+            <tr><td>CDN-библиотеки</td><td>Three.js, Chart.js, GSAP</td><td>Бесплатные</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="passport-section">
+        <h3>Таблица 3. Финансовые затраты</h3>
+        <table class="passport-table">
+          <thead><tr><th>Статья</th><th>Сумма, руб.</th></tr></thead>
+          <tbody>
+            <tr><td>Печатные материалы (раздаточный)</td><td>150</td></tr>
+            <tr><td>Программное обеспечение</td><td>0 (open source)</td></tr>
+            <tr><td>Хостинг</td><td>0 (GitHub Pages)</td></tr>
+            <tr><td><strong>Итого</strong></td><td><strong>150</strong></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="passport-section">
+        <h3>Таблица 4. Ожидаемые результаты</h3>
+        <table class="passport-table">
+          <thead><tr><th>Показатель</th><th>Целевое значение</th></tr></thead>
+          <tbody>
+            <tr><td>Информированность учащихся о структуре мозга</td><td>Повышение на 30% (по результатам опроса)</td></tr>
+            <tr><td>Развенчание мифов</td><td>Снижение числа верящих в мифы на 20%</td></tr>
+            <tr><td>Оценка проекта комиссией</td><td>Соответствие критериям Положения школы</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="passport-section">
+        <h3>Таблица 5. Риски и меры противодействия</h3>
+        <table class="passport-table">
+          <thead><tr><th>Риск</th><th>Вероятность</th><th>Меры</th></tr></thead>
+          <tbody>
+            <tr><td>Отсутствие интернета при демонстрации</td><td>Низкая</td><td>Офлайн SVG-атлас, локальные данные</td></tr>
+            <tr><td>Низкий отклик на опрос</td><td>Средняя</td><td>Мотивация учащихся, анонимность</td></tr>
+            <tr><td>Технические сбои (WebGL)</td><td>Низкая</td><td>Fallback на статичную графику</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="passport-section">
+        <h3>Список литературы и иллюстраций</h3>
+        <ol class="references-list">
+          <li>Beyerstein B.L. "Whence Cometh the Myth that We Only Use 10% of our Brains?" // Mind Myths: Exploring Popular Assumptions About the Mind and Brain, 1999.</li>
+          <li>Nielsen J.A. et al. "An Evaluation of the Left-Brain vs. Right-Brain Hypothesis with Resting State Functional Connectivity Magnetic Resonance Imaging" // PLOS ONE, 2013.</li>
+          <li>Boldrini M. et al. "Human Hippocampal Neurogenesis Persists throughout Aging" // Cell Stem Cell, 2018.</li>
+          <li>Kandel E.R., Schwartz J.H., Jessell T.M. "Principles of Neural Science", 5th ed., McGraw-Hill, 2013.</li>
+          <li>Stroop J.R. "Studies of interference in serial verbal reactions" // Journal of Experimental Psychology, 1935.</li>
+          <li>Официальный сайт ФГОС — <a href="https://fgos.ru" target="_blank" rel="noopener">fgos.ru</a></li>
+        </ol>
+        <p><strong>Иллюстрации:</strong> процедурная 3D-модель мозга (Three.js), SVG-схемы, диаграммы Chart.js</p>
+      </section>
+    </div>
+  </div>
+</dialog>
 
 <script src="script.js"></script>
 </body>
