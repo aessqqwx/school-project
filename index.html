@@ -32,7 +32,9 @@
     </ul>
   </nav>
   <button id="passportBtn" class="passport-btn" aria-controls="passportModal" aria-expanded="false">Паспорт проекта (ФГОС)</button>
-  <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
+  <div id="progressBar" class="progress" role="progressbar" aria-label="Прогресс чтения" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <span id="progressFill" class="progress__fill"></span>
+  </div>
 </header>
 
 <!-- Modal passport -->
