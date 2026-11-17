@@ -29,9 +29,15 @@ function initThree() {
   camera = new THREE.PerspectiveCamera(55, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
   camera.position.set(0, 1.5, 2.5);
 
-  renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  } catch (e) {
+    console.error('WebGLRenderer создание не удалось:', e);
+    canvas.innerHTML = '<div class="brain-fallback"><div class="fallback-icon">🧠</div><p>3D‑модель недоступна (WebGL error).</p></div>';
+    return;
+  }
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -119,6 +125,8 @@ function animate() {
 function initLenis() {
   if (typeof Lenis === 'undefined') {
     console.warn('Lenis не загружен, используем стандартный скролл');
+    // fallback: attach native scroll listener
+    window.addEventListener('scroll', updateProgressBar);
     return;
   }
   lenis = new Lenis({
@@ -129,6 +137,8 @@ function initLenis() {
   lenis.on('scroll', () => {
     updateProgressBar();
   });
+  // также обновлять прогресс при обычном скролле, если Lenis вдруг отключится
+  window.addEventListener('scroll', updateProgressBar);
   function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
