@@ -161,9 +161,13 @@ function updateProgressBar() {
   const htmlHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const pct = htmlHeight > 0 ? Math.min(100, (scrollTop / htmlHeight) * 100) : 0;
-  const bar = document.querySelector('.progress-bar');
+  const fill = document.getElementById('progressFill');
+  if (fill) {
+    fill.style.width = pct + '%';
+  }
+  const bar = document.getElementById('progressBar');
   if (bar) {
-    bar.style.setProperty('--progress', pct + '%');
+    bar.setAttribute('aria-valuenow', String(Math.round(pct)));
   }
 }
 
