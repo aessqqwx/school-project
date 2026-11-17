@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>Итоговый проект «Мозг без мифов» — МБОУ «Ялтинская школа «Радуга»</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!-- CDN libraries -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.0/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header class="site-header" aria-label="Шапка сайта">
+  <div class="header-content">
+    <h1 class="logo">Мозг без мифов</h1>
+    <p class="school">МБОУ «Ялтинская средняя школа «Радуга»</p>
+  </div>
+  <nav class="primary-nav" aria-label="Основная навигация">
+    <ul>
+      <li><a href="#hero">Введение</a></li>
+      <li><a href="#theory">Теория</a></li>
+      <li><a href="#facts">Факты</a></li>
+      <li><a href="#myths">Мифы</a></li>
+      <li><a href="#practice">Практика</a></li>
+      <li><a href="#stroop">Экперемент Струпа</a></li>
+      <li><a href="#test">Тест</a></li>
+    </ul>
+  </nav>
+  <button id="passportBtn" class="passport-btn" aria-controls="passportModal" aria-expanded="false">Паспорт проекта (ФГОС)</button>
+  <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
+</header>
+
+<!-- Modal passport -->
+<div id="passportModal" class="modal" role="dialog" aria-modal="true" hidden>
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Закрыть" data-close="modal">
+      <svg viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18"/>
+        <path d="M6 6l12 12"/>
+      </svg>
+    </button>
+    <h2>Паспорт и план проекта (ФГОС)</h2>
+    <section>
+      <h3>Обязательные таблицы (1‑5)</h3>
+      <table>
+        <caption>Таблица 1. План работ</caption>
+        <thead><tr><th>Этап</th><th>Срок</th></tr></thead>
+        <tbody><tr><td>Исследование</td><td>Май‑Июнь</td></tr></tbody>
+      </table>
+      <table>
+        <caption>Таблица 2. Оборудование</caption>
+        <thead><tr><th>Наименование</th><th>Количество</th></tr></thead>
+        <tbody><tr><td>Компьютер</td><td>1</td></tr></tbody>
+      </table>
+      <table>
+        <caption>Таблица 3. Расходы</caption>
+        <thead><tr><th>Статья расходов</th><th>Сумма, руб.</th></tr></thead>
+        <tbody><tr><td>Без оплаты (CDN)</th><td>0</td></tr></tbody>
+      </table>
+      <table>
+        <caption>Таблица 4. Ожидаемые результаты</caption>
+        <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+        <tbody><tr><td>Уровень знаний учащихся</th><td>Повышение на 30 %</td></tr></tbody>
+      </table>
+      <table>
+        <caption>Таблица 5. Оценка рисков</caption>
+        <thead><tr><th>Риск</th><th>Вероятность</th></tr></thead>
+        <tbody><tr><td>Технические сбои</th><td>Низкая</td></tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h3>Литература и иллюстрации</h3>
+      <ol>
+        <<li>Бурденко Н.П. «Неврология для школьников», 2021.</li>
+        <li>Греков А.В. «3D‑модели в образовании», 2020.</li>
+        <li>Официальный сайт ФГОС — <u>https://fgos.ru</u></li>
+      </ol>
+      <p>Рисунки 1‑5 соответствуют структурам мозга, полушариям, нейронам, синapsам и функциональным зонам.</p>
+    </section>
+  </div>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section id="hero" class="hero" aria-labelledby="heroTitle">
+    <h2 id="heroTitle">Знаете ли вы свой мозг?</h2>
+    <div class="counters">
+      <div class="counter" data-target="86">0</div>
+      <div class="counter" data-target="12">0</div>
+      <div class="counter" data-target="5">0</div>
+    </div>
+    <p>86 млрд нейронов, 12 ключевых фактов, 5 проверенных мифов</p>
+  </section>
+
+  <!-- Theory / 3D Atlas -->
+  <section id="theory" class="section" aria-labelledby="theoryTitle">
+    <h2 id="theoryTitle">Теоретический раздел: 3D‑атлас мозга</h2>
+    <div id="brainCanvas" class="brain-canvas" role="img" aria-label="Процедурная 3‑д модель мозга с маркерами отделов"></div>
+    <p class="brain-note">Модель построена процедурно, внешних файлов не требует.</p>
+  </section>
+
+  <!-- Facts bento grid -->
+  <section id="facts" class="section" aria-labelledby="factsTitle">
+    <h2 id="factsTitle">Факты о мозге</h2>
+    <div class="bento-grid">
+      <article class="bento-item">
+        <h3>Нейроны</h3>
+        <p>Взрослый мозг содержит около 86 млард нейронов.</p>
+      </article>
+      <article class="bento-item">
+        <h3>Энергопотребление</h3>
+        <p>Мозг использует около 20 % всей энергии организма.</p>
+      </article>
+      <article class="bento-item">
+        <h3>Пластичность</h3>
+        <p>Синapticные связи перестраиваются в ходе обучения.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Myths checker -->
+  <section id="myths" class="section" aria-labelledby="mythsTitle">
+    <h2 id="mythsTitle">Проверка мифов</h2>
+    <div class="myth-cards">
+      <article class="myth-card" data-real="false">
+        <h3>Миф 1: 90 % мозга не используется</h3>
+        <button class="reveal-btn">Показать правду</button>
+        <p class="truth hidden">Это миф: весь мозг активен в разные моменты.</p>
+      </article>
+      <article class="myth-card" data-real="true">
+        <h3>Миф 2: Мысли только в левом полушарии</h3>
+        <button class="reveal-btn">Показать правду</button>
+        <p class="truth hidden">Неправда: оба полушария участвуют в мышлении.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Practical block -->
+  <section id="practice" class="section" aria-labelledby="practiceTitle">
+    <h2 id="practiceTitle">Практический раздел</h2>
+    <table class="data-table">
+      <caption>Таблица 1. Очки внимания учащихся</caption>
+      <thead><tr><th>Ученик</th><th>Балл</th></tr></thead>
+      <tbody><tr><td>Иванов И.</td><td>78</td></tr><tr><td>Петрова А.</td><td>85</td></tr></tbody>
+    </table>
+    <canvas id="chartCanvas" width="500" height="300" aria-label="Диаграмма распределения баллов внимания"></canvas>
+  </section>
+
+  <!-- Stroop experiment -->
+  <section id="stroop" class="section" aria-labelledby="stroopTitle">
+    <h2 id="stroopTitle">Живой эксперимент: Струп</h2>
+    <button id="startStroop" class="btn">Начать эксперимент</button>
+    <div id="stroopContainer" class="stroop-game hidden" aria-live="polite"></div>
+    <p id="stroopResult" class="hidden"></p>
+  </section>
+
+  <!-- Final test -->
+  <section id="test" class="section" aria-labelledby="testTitle">
+    <h2 id="testTitle">Итоговый тест</h2>
+    <p>Тест из 5 вопросов будет активирован после эксперимента.</p>
+  </section>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <p>© 2026 МБОУ «Ялтинская средняя школа «Радуга». Все права защищены.</p>
+  <button id="contrastToggle" aria-pressed="false">Контрастный режим</button>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
