@@ -58,14 +58,13 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
   border-radius:var(--radius); font-weight:600;
 }
 .passport-btn:hover { background:var(--accent-soft); }
-.progress-bar {
+.progress {
   height:3px; background:var(--border);
   border-radius:999px; overflow:hidden;
 }
-.progress-bar::before {
-  content:""; display:block; height:100%;
-  width:0%; background:var(--accent);
-  transition:width .2s linear;
+.progress__fill {
+  display:block; height:100%; width:0%;
+  background:var(--accent); transition:width .15s linear;
 }
 
 /* ============================================================
@@ -106,6 +105,73 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
 .hero h2 { font-size:2.5rem; margin-bottom:1rem; }
 .counters { display:flex; justify-content:center; gap:2rem; margin:2rem 0; }
 .counter { font-size:3rem; font-weight:600; font-family:var(--font-mono); color:var(--accent); }
+
+/* ============================================================
+   Progress bar
+============================================================ */
+.progress[aria-valuenow] { display:block; }
+
+/* ============================================================
+   Stroop experiment
+============================================================ */
+.stroop-game { font-size:3rem; text-align:center; min-height:250px; display:flex; align-items:center; justify-content:center; gap:1rem; flex-direction:column; }
+.stroop-word { font-size:3rem; font-weight:600; font-family:var(--font-mono); min-width:220px; padding:1rem 2rem; border:2px solid var(--border); border-radius:var(--radius); background:var(--card); }
+.stroop-buttons { display:flex; gap:1rem; justify-content:center; margin-top:1rem; }
+.btn-yes, .btn-no { padding:.6rem 1.4rem; border-radius:var(--radius); font-weight:600; font-family:var(--font-mono); }
+.btn-yes { background:var(--accent); color:#000; }
+.btn-yes:hover { background:#72d1fb; }
+.btn-no { border:2px solid var(--border); color:var(--fg); }
+.btn-no:hover { background:var(--border); color:var(--fg); }
+.stroop-feedback { margin-top:.8rem; font-weight:600; padding:.5rem 1rem; border-radius:var(--radius); }
+.stroop-feedback.success { color:#27ae60; background:rgba(39,174,96,0.15); }
+.stroop-feedback.error { color:#e74c3c; background:rgba(231,76,60,0.15); }
+
+/* ============================================================
+   Test block
+============================================================ */
+.test-content { display:flex; flex-direction:column; gap:1rem; align-items:center; }
+.question-progress { font-family:var(--font-mono); color:var(--muted); font-size:.9rem; }
+.question-text { font-size:1.25rem; font-weight:600; text-align:center; max-width:600px; }
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.8rem; width:100%; max-width:600px; }
+.option-btn { padding:1rem; border:2px solid var(--border); border-radius:var(--radius); background:var(--card); color:var(--fg); font-weight:600; text-align:left; }
+.option-btn:hover { border-color:var(--accent); }
+.test-results { text-align:center; display:flex; flex-direction:column; align-items:center; gap:.8rem; }
+.score-display { font-size:3rem; font-weight:600; font-family:var(--font-mono); color:var(--accent); }
+.score-percent { font-size:1.5rem; color:var(--muted); }
+.score-message { max-width:500px; line-height:1.5; }
+
+/* ============================================================
+   Chart wrapper
+============================================================ */
+.chart-wrap { width:100%; max-height:300px; border-radius:var(--radius); border:1px solid var(--border); background:var(--card); }
+
+/* ============================================================
+   Brain fallback
+============================================================ */
+.brain-fallback { width:100%; height:500px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; border-radius:var(--radius); border:1px solid var(--border); background:#0a0b0e; color:var(--muted); }
+.fallback-icon { font-size:4rem; }
+
+/* ============================================================
+   Mobile menu
+============================================================ */
+.mobile-menu-toggle { background:none; border:none; color:var(--fg); font-size:1.5rem; cursor:pointer; margin-right:1rem; }
+
+/* ============================================================
+   Image utilities
+============================================================ */
+.img-blend-screen { mix-blend-mode:screen; }
+.img-masked { mask-image:radial-gradient(circle at center,black 60%,transparent 100%); -webkit-mask-image:radial-gradient(circle at center,black 60%,transparent 100%); }
+
+/* ============================================================
+   Print styles
+============================================================ */
+@media print {
+  .site-header, .site-footer, .progress, .btn, .modal, .passport-btn, #contrastToggle { display:none !important; }
+  body { background:#fff; color:#000; font-size:12pt; }
+  a { text-decoration:none; color:#000; }
+  .section { page-break-inside:avoid; padding:0; }
+  .brain-canvas, #chartCanvas, .stroop-game { page-break-inside:avoid; }
+}
 
 /* ============================================================
    Brain canvas
@@ -174,7 +240,7 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
    Print styles
 ============================================================ */
 @media print {
-  .site-header, .site-footer, .progress-bar, .btn, .modal, .passport-btn, #contrastToggle { display:none !important; }
+  .site-header, .site-footer, .progress, .btn, .modal, .passport-btn, #contrastToggle { display:none !important; }
   body { background:#fff; color:#000; font-size:12pt; }
   a { text-decoration:none; color:#000; }
   .section { page-break-inside:avoid; padding:0; }
